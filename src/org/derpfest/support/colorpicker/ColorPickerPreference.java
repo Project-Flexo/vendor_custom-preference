@@ -60,6 +60,8 @@ public class ColorPickerPreference extends Preference implements
     private boolean mShowLedPreview;
     private boolean mShowReset;
     private boolean mShowPreview;
+    private boolean mDividerAbove;
+    private boolean mDividerBelow;
     private EditText mEditText;
 
     public ColorPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -108,6 +110,8 @@ public class ColorPickerPreference extends Preference implements
             mShowLedPreview = attrs.getAttributeBooleanValue(null, "ledPreview", false);
             mShowReset = attrs.getAttributeBooleanValue(SETTINGS_NS, "showReset", false);
             mShowPreview = attrs.getAttributeBooleanValue(SETTINGS_NS, "showPreview", false);
+            mDividerAbove = attrs.getAttributeBooleanValue(SETTINGS_NS, "dividerAbove", false);
+            mDividerBelow = attrs.getAttributeBooleanValue(SETTINGS_NS, "dividerBelow", false);
         }
     }
 
@@ -115,6 +119,8 @@ public class ColorPickerPreference extends Preference implements
     public void onBindViewHolder(PreferenceViewHolder view) {
         mView = view;
         super.onBindViewHolder(view);
+        view.setDividerAllowedAbove(mDividerAbove);
+        view.setDividerAllowedBelow(mDividerBelow);
 
         view.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
