@@ -108,7 +108,7 @@ public class ColorPickerPreference extends Preference implements
             mAlphaSliderEnabled = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
             mDefaultValue = attrs.getAttributeIntValue(ANDROIDNS, "defaultValue", Color.BLACK);
             mShowLedPreview = attrs.getAttributeBooleanValue(null, "ledPreview", false);
-            mShowReset = attrs.getAttributeBooleanValue(SETTINGS_NS, "showReset", false);
+            mShowReset = attrs.getAttributeBooleanValue(SETTINGS_NS, "showReset", true);
             mShowPreview = attrs.getAttributeBooleanValue(SETTINGS_NS, "showPreview", true);
             mDividerAbove = attrs.getAttributeBooleanValue(SETTINGS_NS, "dividerAbove", false);
             mDividerBelow = attrs.getAttributeBooleanValue(SETTINGS_NS, "dividerBelow", false);
@@ -153,7 +153,6 @@ public class ColorPickerPreference extends Preference implements
         if (!mShowReset || mView == null || mWidgetFrameView == null)
             return;
 
-        ImageView defView = new ImageView(getContext());
         // remove already created default button
         int count = mWidgetFrameView.getChildCount();
         if (count > 0) {
@@ -166,6 +165,10 @@ public class ColorPickerPreference extends Preference implements
                 mWidgetFrameView.removeView(spacer);
             }
         }
+
+        if (!isEnabled()) return;
+
+        ImageView defView = new ImageView(getContext());
         mWidgetFrameView.addView(defView);
         defView.setImageDrawable(getContext().getDrawable(R.drawable.ic_settings_backup_restore));
         defView.setTag("default");
@@ -411,5 +414,6 @@ public class ColorPickerPreference extends Preference implements
     public void setEnabled (boolean enabled) {
         super.setEnabled(enabled);
         setPreviewColor();
+        setDefaultButton();
     }
 }
